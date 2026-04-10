@@ -1,0 +1,85 @@
+.navbar {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandIcon {
+  font-size: 24px;
+}
+
+.brandName {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #e94560;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navLink {
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.logoutBtn {
+  background: #e94560;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.logoutBtn:hover {
+  background: #c73652;
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 12px;
+  }
+
+  .brandName {
+    font-size: 18px;
+  }
+
+  .navLink {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .logoutBtn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
