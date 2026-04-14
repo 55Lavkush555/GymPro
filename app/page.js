@@ -12,6 +12,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (localStorage.getItem('gymAuth') === 'true') {
       router.push('/dashboard');
+      router.refresh()
     }
   }, [router]);
 
