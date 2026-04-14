@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../../components/Navbar';
-import { loadMembers, saveMembers, getMemberStatus, calcExpiry } from '../../lib/members';
+import { getMemberStatus, calcExpiry } from '../../lib/members';
 import styles from './dashboard.module.css';
 
 export default function DashboardPage() {
@@ -20,7 +20,11 @@ export default function DashboardPage() {
       router.push('/');
       return;
     }
-    setMembers(loadMembers());
+    (async () => {
+      let a = await fetch("/api/members").then(res => res.json()).catch(() => null)
+      setMembers(a || []);
+    })();
+
   }, [router]);
 
   const filtered = members.filter((m) => {
@@ -66,22 +70,49 @@ export default function DashboardPage() {
     });
   }
 
-  function saveEdit(e) {
+  async function saveEdit(e) {
     e.preventDefault();
-    const updated = members.map((m) => (m.id === editForm.id ? editForm : m));
-    setMembers(updated);
-    saveMembers(updated);
+
+    let headersList = {
+      "Accept": "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+      "Content-Type": "application/json"
+    }
+
+    let bodyContent = JSON.stringify(editForm);
+
+    let response = await fetch(`/api/member/${editForm._id}`, {
+      method: "PUT",
+      body: bodyContent,
+      headers: headersList
+    });
+
+    (async () => {
+      let a = await fetch("/api/members").then(res => res.json()).catch(() => null)
+      setMembers(a || []);
+    })()
     closeEdit();
   }
-
+  
   function confirmDelete(id) {
     setDeleteConfirm(id);
   }
 
-  function doDelete() {
-    const updated = members.filter((m) => m.id !== deleteConfirm);
-    setMembers(updated);
-    saveMembers(updated);
+  async function doDelete() {
+    let headersList = {
+      "Accept": "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+    }
+    
+    let response = await fetch(`/api/member/${deleteConfirm}`, {
+      method: "DELETE",
+      headers: headersList
+    });
+    
+    (async () => {
+      let a = await fetch("/api/members").then(res => res.json()).catch(() => null)
+      setMembers(a || []);
+    })()
     setDeleteConfirm(null);
   }
 
@@ -152,7 +183,7 @@ export default function DashboardPage() {
             {filtered.map((member) => {
               const status = getMemberStatus(member.expiryDate);
               return (
-                <div key={member.id} className={styles.memberCard}>
+                <div key={member._id} className={styles.memberCard}>
                   <div className={styles.cardHeader}>
                     <div className={styles.memberName}>
                       <span className={`${styles.dot} ${statusDot(status)}`} />
@@ -186,7 +217,7 @@ export default function DashboardPage() {
                     <button className={styles.editBtn} onClick={() => openEdit(member)}>
                       Edit
                     </button>
-                    <button className={styles.deleteBtn} onClick={() => confirmDelete(member.id)}>
+                    <button className={styles.deleteBtn} onClick={() => confirmDelete(member._id)}>
                       Delete
                     </button>
                   </div>

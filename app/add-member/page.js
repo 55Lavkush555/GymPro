@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../../components/Navbar';
-import { loadMembers, saveMembers, calcExpiry } from '../../lib/members';
+import { calcExpiry } from '../../lib/members';
 import styles from './add-member.module.css';
 
 export default function AddMemberPage() {
@@ -35,16 +35,17 @@ export default function AddMemberPage() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const members = loadMembers();
     const newMember = {
-      id: Date.now().toString(),
       ...form,
       expiryDate,
     };
-    const updated = [...members, newMember];
-    saveMembers(updated);
+    const res = await fetch("/api/members", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newMember),
+    }).then(res => res.json());
     setSuccess(true);
     setForm({
       name: '',
