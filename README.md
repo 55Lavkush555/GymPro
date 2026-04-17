@@ -1,150 +1,150 @@
-# 🏋️ Gym Management System (Demo)
+# 🏋️ Gym Pro - Member Management System
 
-A simple and modern Gym Management System built using **Next.js (App Router)** with **JavaScript** and **Vanilla CSS**. This project is designed as a demo for gym owners to manage members and track membership status easily.
-
-🔗 **Live Demo:** https://gym-pro-eosin.vercel.app/
+A modern web application to manage gym members, track memberships, and send automated email reminders before expiry.
 
 ---
 
-## 🚀 Features
+🌐 Live Demo
 
-### 🔐 Authentication
-
-* Simple password-based login
-* Protected dashboard (unauthorized users redirected)
-* Auth state stored in localStorage
+👉 https://gym-pro-eosin.vercel.app
 
 ---
 
-### 👥 Member Management
+🚀 Features
 
-* Add new members with:
-
-  * Name
-  * Phone
-  * Email
-  * Plan (Monthly, Quarterly, Yearly)
-  * Start Date
-* Automatic expiry date calculation
+- 📋 Add, update, delete members (CRUD)
+- 🔍 Search members by name
+- 📊 Dashboard with member overview
+- 📅 Membership expiry tracking
+- 📧 Automated email reminders before expiry
+- ⚡ Fast and responsive UI
 
 ---
 
-### 📊 Dashboard
+🛠️ Tech Stack
 
-* View all members in card layout
-* Each card displays:
-
-  * Full member details
-  * Membership status
-
----
-
-### 🟢 Status Indicators
-
-* 🟢 Active → More than 3 days left
-* 🟡 Expiring Soon → Within 3 days
-* 🔴 Expired → Membership ended
+- Frontend: Next.js
+- Backend: Next.js API Routes
+- Database: MongoDB
+- Email Service: Nodemailer (Gmail SMTP)
+- Deployment: Vercel
 
 ---
 
-### 📂 Smart Filtering Tabs
+📁 Project Structure
 
-* All Members
-* Active Members
-* Expiring Soon
-* Expired Members
+app/
+ ├── api/
+ │   ├── members/
+ │   ├── member/[id]/
+ │   └── send-reminders/
+ ├── dashboard/
+ └── page.js
 
----
+lib/
+ └── mongodb.js
 
-### 🔍 Search
-
-* Real-time search by member name
-* Works with filters
-
----
-
-### ✏️ Edit & 🗑️ Delete
-
-* Edit member details easily
-* Auto-update expiry on changes
-* Delete members with confirmation
+models/
+ └── Member.js
 
 ---
 
-### 📈 Stats Overview
+⚙️ Environment Variables
 
-* Total members count
-* Active / Expiring / Expired counts
+Create a ".env.local" file:
 
----
-
-### 🚪 Logout
-
-* Secure logout
-* Clears authentication from localStorage
+MONGO_URI=your_mongodb_connection_string
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_password
 
 ---
 
-## 🛠️ Tech Stack
+▶️ Run Locally
 
-* **Next.js 13+ (App Router)**
-* **JavaScript (No TypeScript)**
-* **Vanilla CSS**
-* **localStorage (No backend)**
+npm install
+npm run dev
 
----
+App runs on:
 
-## 📁 Project Structure
-
-```
-/app
-  /dashboard
-  /add-member
-  page.js
-  layout.js
-
-/components
-  MemberCard.js
-  Navbar.js
-  Form.js
-
-/utils
-  dateUtils.js
-  statusUtils.js
-```
+http://localhost:3000
 
 ---
 
-## ⚙️ How It Works
+🌐 API Endpoints
 
-* Data is stored in **localStorage**
-* On first load, dummy members are added
-* Expiry date is calculated automatically based on plan
-* Status is derived dynamically from current date
+Get All Members
 
----
+GET /api/members
 
-## 📌 Note
+Create Member
 
-This is a **demo project** and does not include a backend or database. It is intended for showcasing functionality and UI/UX.
+POST /api/members
 
----
+Get Single Member
 
-## 💡 Future Improvements
+GET /api/member/:id
 
-* Email / WhatsApp notifications for expiring memberships
-* Backend integration (Firebase / Node.js)
-* Admin dashboard with analytics
-* Multi-user support
+Update Member
 
----
+PUT /api/member/:id
 
-## 👨‍💻 Author
+Delete Member
 
-Built with ❤️ by a passionate developer.
+DELETE /api/member/:id
+
+Send Reminder Emails
+
+GET /api/send-reminders
 
 ---
 
-## ⭐ If you like this project
+⏰ Cron Job (Vercel)
 
-Give it a ⭐ on GitHub and share your feedback!
+{
+  "crons": [
+    {
+      "path": "/api/send-reminders",
+      "schedule": "30 3 * * *"
+    }
+  ]
+}
+
+«Runs daily at 9:00 AM IST»
+
+---
+
+📧 Email Automation
+
+- Automatically sends reminder emails
+- Targets members whose membership is about to expire
+- Uses Gmail App Password for secure authentication
+
+---
+
+💰 Pricing Model (Optional)
+
+- ₹399/month per gym
+- Scalable for multiple clients
+
+---
+
+🔥 Status
+
+✅ Live & Deployed
+✅ Cron Job Working
+✅ Email Automation Active
+✅ Ready for Real Clients
+
+---
+
+👨‍💻 Author
+
+Built by Lavkush 🚀
+
+---
+
+⭐ Note
+
+This project is built for real-world usage and can be sold to gym owners to manage memberships and automate reminders efficiently.
+
+---
